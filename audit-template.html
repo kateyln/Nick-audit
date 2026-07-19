@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Business Name] — Online Presence Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0f17;
+    --bg-elevated: #131a26;
+    --bg-card: #10151f;
+    --border: #232b3a;
+    --blue: #4c8dff;
+    --text: #e7ebf3;
+    --text-muted: #8b93a7;
+    --text-faint: #5b6478;
+    --green: #34d399;
+    --red: #e0684f;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before{
+    content:"";
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(76,141,255,0.14) 0%, rgba(76,141,255,0) 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  section{ padding: 68px 0; }
+  section + section{ border-top: 1px solid var(--border); }
+
+  .eyebrow{
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h1, h2, h3{
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .section-head h2{ font-size: 26px; margin-bottom: 8px; }
+  .section-head .desc{ font-size: 15px; color: var(--text-muted); margin-bottom: 28px; max-width: 540px; }
+
+  /* ---------- Header ---------- */
+  .header{ padding: 96px 0 56px; text-align: center; }
+  .header .eyebrow{ text-align:center; }
+  .header h1{ font-size: 38px; line-height: 1.15; margin-bottom: 10px; }
+  .header .subtitle{ font-size: 17px; color: var(--text-muted); margin-bottom: 22px; }
+  .header .meta{ font-size: 13px; color: var(--text-faint); }
+  .header .divider{ width: 48px; height: 2px; background: linear-gradient(90deg, var(--blue), transparent); margin: 28px auto 0; }
+
+  /* ---------- Why I looked ---------- */
+  .why p{ font-size: 16px; color: var(--text-muted); max-width: 580px; }
+
+  /* ---------- Executive Summary ---------- */
+  .exec-block{ margin-bottom: 32px; }
+  .exec-block:last-child{ margin-bottom: 0; }
+  .exec-label{ font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .check-list{ list-style:none; }
+  .check-list li{
+    display:flex; align-items:flex-start; gap: 10px;
+    font-size: 15px; padding: 8px 0; color: var(--text);
+  }
+  .check-list .icon-yes{ color: var(--green); flex-shrink:0; margin-top: 2px; }
+  .opportunity-note{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+    border-radius: 8px;
+    padding: 18px 20px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  /* ---------- Vertical flow diagram ---------- */
+  .flow-pair{ display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+  @media (max-width: 620px){ .flow-pair{ grid-template-columns: 1fr; } }
+  .vflow{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 18px;
+  }
+  .vflow-title{ font-size: 13px; font-weight: 600; color: var(--text-muted); text-align:center; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .vflow-step{
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    text-align: center;
+    color: var(--text);
+  }
+  .vflow-step.breakpoint{
+    border-color: rgba(224,104,79,0.4);
+    background: rgba(224,104,79,0.08);
+    color: var(--red);
+    font-weight: 600;
+  }
+  .vflow-arrow{ display:flex; justify-content:center; padding: 6px 0; color: var(--text-faint); }
+  .why-only ul{ list-style:none; margin-top: 14px; }
+  .why-only li{ font-size: 14px; color: var(--text-muted); padding: 4px 0 4px 18px; position: relative; }
+  .why-only li::before{ content:"•"; position:absolute; left:0; color: var(--blue); }
+
+  /* ---------- Upload slot (click to add real image) ---------- */
+  .upload-slot{
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: border-color .15s ease, background .15s ease;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .upload-slot:hover{ border-color: var(--blue); background: rgba(76,141,255,0.05); }
+  .upload-slot input[type=file]{ display:none; }
+  .upload-slot .placeholder-content{ padding: 28px 16px; }
+  .upload-slot .placeholder-content svg{ color: var(--text-faint); margin-bottom: 10px; }
+  .upload-slot .placeholder-content .label{ font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 3px; }
+  .upload-slot .placeholder-content .hint{ font-size: 12px; color: var(--text-faint); }
+  .upload-slot img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .upload-slot.has-image{ min-height: 0; }
+  .upload-slot .remove-btn{
+    position:absolute; top:8px; right:8px;
+    background: rgba(11,15,23,0.85); border: 1px solid var(--border);
+    color: var(--text-muted); font-size: 11px; padding: 4px 9px; border-radius: 999px;
+    display:none; z-index:2;
+  }
+  .upload-slot.has-image .remove-btn{ display:block; }
+  .upload-slot.has-image:hover .remove-btn{ color: var(--text); border-color: var(--blue); }
+
+  .search-card{ margin-bottom: 26px; }
+  .search-card:last-of-type{ margin-bottom: 0; }
+  .search-bar{
+    display:flex; align-items:center; gap: 10px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 999px; padding: 10px 16px; font-size: 14px; color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .search-bar svg{ flex-shrink:0; opacity:0.6; }
+  .caption-note{ margin-top: 18px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+
+  /* ---------- Tables ---------- */
+  table.data{ width:100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+  table.data th, table.data td{ padding: 13px 12px; text-align:left; border-bottom: 1px solid var(--border); }
+  .table-wrap{ overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 8px; }
+  .table-wrap table{ margin-top: 0; min-width: 480px; }
+  table.data th{ font-family: var(--font-display); font-weight:600; color: var(--text-muted); font-size:12.5px; text-transform:uppercase; letter-spacing:0.04em; }
+  table.data td.status-no{ color: var(--red); }
+  table.data td.status-yes{ color: var(--green); }
+  table.compare th:not(:first-child), table.compare td:not(:first-child){ text-align:center; }
+  table.compare td.mark-no{ color: var(--text-faint); text-align:center; }
+  table.compare td.mark-yes{ color: var(--green); text-align:center; }
+
+  /* ---------- Opportunities ---------- */
+  .opp-item{ padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .opp-item:last-child{ border-bottom:none; }
+  .opp-item .opp-title{ font-size: 16px; font-weight:600; margin-bottom: 6px; display:flex; gap:10px; align-items:baseline; }
+  .opp-item .opp-num{ color: var(--blue); font-family: var(--font-display); font-size: 14px; }
+  .opp-item p{ font-size: 14px; color: var(--text-muted); }
+
+  /* ---------- Priority actions ---------- */
+  .priority-card{ background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; margin-bottom: 14px; }
+  .priority-card:last-child{ margin-bottom:0; }
+  .priority-card .tag{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color: var(--blue); border:1px solid rgba(76,141,255,0.3); background: rgba(76,141,255,0.08); border-radius:999px; padding:4px 10px; margin-bottom:12px; }
+  .priority-card h3{ font-size:17px; margin-bottom: 4px; }
+  .priority-card ul{ list-style:none; margin-top: 10px; }
+  .priority-card ul li{ font-size:14px; color: var(--text-muted); padding:4px 0 4px 18px; position:relative; }
+  .priority-card ul li::before{ content:"—"; position:absolute; left:0; color: var(--text-faint); }
+
+  /* ---------- Closing ---------- */
+  .closing{ text-align:center; padding: 88px 0 96px; }
+  .closing p{ font-size: 16px; color: var(--text-muted); max-width: 480px; margin: 0 auto 12px; }
+  .closing .signature{ font-size: 14px; color: var(--text-faint); margin-top: 24px; }
+  .closing .divider{ width: 48px; height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); margin: 0 auto 28px; }
+
+  /* ---------- Finalize control ---------- */
+  .finalize-bar{
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .finalize-btn{
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--blue);
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(76,141,255,0.35);
+  }
+  .finalize-btn:hover{ background: #6ba0ff; }
+  .finalize-btn.done{
+    background: var(--bg-card);
+    color: var(--text-faint);
+    border: 1px solid var(--border);
+    box-shadow: none;
+    cursor: default;
+  }
+  .finalize-hint{
+    font-size: 11px;
+    color: var(--text-faint);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 8px;
+    max-width: 170px;
+    line-height: 1.4;
+  }
+
+  /* ---------- Finalized (locked) image ---------- */
+  .final-image{
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: zoom-in;
+    border: 1px solid var(--border);
+  }
+  .final-image img{ width:100%; display:block; }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6,8,13,0.92);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    cursor: zoom-out;
+  }
+  .lightbox.open{ display: flex; }
+  .lightbox img{
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  }
+  .lightbox-close{
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 15px;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox-close:hover{ color: var(--text); border-color: var(--blue); }
+
+  @media print{
+    .finalize-bar{ display:none; }
+  }
+
+  @media (max-width: 600px){
+    .header{ padding: 64px 0 40px; }
+    .header h1{ font-size: 28px; }
+    section{ padding: 48px 0; }
+    table.data, table.compare{ font-size: 12.5px; }
+    table.data th, table.data td, table.compare th, table.compare td{ padding: 9px 6px; }
+    .finalize-bar{ flex-direction: column; align-items: flex-end; top: 10px; right: 10px; }
+    .finalize-hint{ display:none; }
+    .lightbox{ padding: 16px; }
+  }
+</style>
+
+</head>
+<body>
+  
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-close" id="lightboxClose">✕</div>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <section class="header">
+    <span class="eyebrow">Online Presence Audit</span>
+    <h1>Mobile Auto, Truck &amp; Trailer Repair</h1>
+    <p class="subtitle">A quick look at how your business shows up online right now.</p>
+    <p class="meta">Prepared for Nick · July 2026</p>
+    <div class="divider"></div>
+  </section>
+
+  <!-- WHY I LOOKED -->
+  <section class="why">
+    <span class="eyebrow">Why I looked into this</span>
+    <p>I came across your business while looking at mobile repair services around the GTA. Since you're mainly relying on Nextdoor, I wanted to see how your business appears elsewhere online and whether there were any opportunities that might be worth a look.</p>
+  </section>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <section>
+    <div class="section-head">
+      <h2>Executive Summary</h2>
+    </div>
+
+    <div class="exec-block">
+      <div class="exec-label">What's working</div>
+      <ul class="check-list">
+        <li><span class="icon-yes">✓</span> Clear service offering</li>
+        <li><span class="icon-yes">✓</span> Mobile service across the GTA</li>
+        <li><span class="icon-yes">✓</span> Competitive pricing</li>
+        <li><span class="icon-yes">✓</span> Truck &amp; fleet specialization</li>
+      </ul>
+    </div>
+
+    <div class="exec-block">
+      <div class="exec-label">Biggest opportunity</div>
+      <div class="opportunity-note">
+        Your business currently has very little visibility outside of Nextdoor. While your profile does a good job explaining your services, people searching on Google or Google Maps for mobile mechanics, truck repair, or undercoating are unlikely to come across your business.
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW CUSTOMERS FIND MOBILE MECHANICS -->
+  <section>
+    <div class="section-head">
+      <h2>How Customers Find Mobile Mechanics</h2>
+    </div>
+
+    <div class="flow-pair">
+      <div class="vflow">
+        <div class="vflow-title">Typical customer journey</div>
+        <div class="vflow-step">Customer needs a mechanic</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step">Searches Google / Google Maps</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step">Sees businesses with a Google Business Profile</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step">Compares reviews, photos &amp; websites</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step">Calls one of the businesses they found</div>
+      </div>
+
+      <div class="vflow">
+        <div class="vflow-title">Where your business fits today</div>
+        <div class="vflow-step">Customer needs a mechanic</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step">Searches Google / Google Maps</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step breakpoint">Your business doesn't appear</div>
+        <div class="vflow-arrow">↓</div>
+        <div class="vflow-step breakpoint">Customer chooses another business</div>
+      </div>
+    </div>
+
+    <div class="why-only">
+      <p style="font-size:14px; color:var(--text-muted); margin-top:24px;">Your business is currently discoverable only if someone:</p>
+      <ul>
+        <li>Already knows about your Nextdoor profile</li>
+        <li>Is browsing Nextdoor</li>
+        <li>Finds your phone number through a referral</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT CUSTOMERS CURRENTLY SEE -->
+  <section>
+    <div class="section-head">
+      <h2>What Customers Currently See</h2>
+    </div>
+
+    <div class="search-card">
+      <div class="search-bar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        mobile mechanic Mississauga
+      </div>
+      <div class="final-image" onclick="openLightbox(this.querySelector('img').src)">
+  <img src="images/serp-mobile-mechanic.png" alt="Search results for mobile mechanic Mississauga">
+</div>
+    </div>
+
+    <div class="search-card">
+      <div class="search-bar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        truck repair GTA
+      </div>
+      <div class="final-image" onclick="openLightbox(this.querySelector('img').src)">
+  <img src="images/serp-truck-repair.png" alt="Search results for truck repair GTA">
+</div>
+    </div>
+
+    <div class="search-card">
+      <div class="search-bar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        mobile undercoating Mississauga
+      </div>
+      <div class="final-image" onclick="openLightbox(this.querySelector('img').src)">
+  <img src="images/serp-mobile-undercoating.png" alt="Search results for mobile undercoating Mississauga">
+</div>
+    </div>
+
+    <p class="caption-note">These are the businesses potential customers are currently seeing when searching for services like yours.</p>
+  </section>
+
+  <!-- CURRENT ONLINE PRESENCE -->
+  <section>
+    <div class="section-head">
+      <h2>Current Online Presence</h2>
+    </div>
+
+    <div class="table-wrap">
+    <table class="data">
+      <thead>
+        <tr><th>Platform</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Google Business Profile</td><td class="status-no">❌ Not found</td></tr>
+        <tr><td>Google Maps</td><td class="status-no">❌ Not visible</td></tr>
+        <tr><td>Website</td><td class="status-no">❌ None</td></tr>
+        <tr><td>Google Reviews</td><td class="status-no">❌ None</td></tr>
+        <tr><td>Facebook Business Page</td><td class="status-no">❌ Not found</td></tr>
+        <tr><td>Nextdoor</td><td class="status-yes">✅ Active</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- COMPETITOR COMPARISON -->
+  <section>
+    <div class="section-head">
+      <h2>Competitor Comparison</h2>
+    </div>
+
+    <div class="table-wrap">
+    <table class="data compare">
+      <thead>
+        <tr><th>&nbsp;</th><th>Your Business</th><th>Mike Mobile Mechanic "M.M.M."</th><th>M&A Mobile Mechanic</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Google Business Profile</td><td class="mark-no">❌</td><td class="mark-yes">✅</td><td class="mark-yes">✅</td></tr>
+        <tr><td>Google Reviews</td><td class="mark-no">❌</td><td class="mark-yes">98</td><td class="mark-yes">155</td></tr>
+        <tr><td>Website</td><td class="mark-no">❌</td><td class="mark-yes">✅</td><td class="mark-no">❌</td></tr>
+        <tr><td>Photos</td><td class="mark-no">❌</td><td class="mark-yes">✅</td><td class="mark-yes">✅</td></tr>
+        <tr><td>Appears in Search</td><td class="mark-no">❌</td><td class="mark-yes">✅</td><td class="mark-yes">✅</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITIES -->
+  <section>
+    <div class="section-head">
+      <h2>Opportunities I Noticed</h2>
+    </div>
+
+    <div class="opp-item">
+      <div class="opp-title"><span class="opp-num">01</span> Google Business Profile</div>
+      <p>A Google Business Profile is what shows up when someone searches your business name, or searches "mobile mechanic" near their location it's what puts a business on Google Maps with your phone number, hours, service area, and reviews all in one place. Right now, your business doesn't have one set up <b>(it's free to create)</b> which means you're not eligible to appear on Google Maps or in local "near me" searches at all, regardless of how good your service is. It's usually the single biggest factor in local visibility for a business like yours.</p>
+    </div>
+    <div class="opp-item">
+      <div class="opp-title"><span class="opp-num">02</span> Reviews</div>
+      <p>Most people check reviews before booking a mobile mechanic  especially when choosing between two similar options. Right now, your business has little to no review presence on Google or Nextdoor, which gives potential customers less to go on when deciding who to call.</p>
+      <br>
+      <p>The good news is this usually isn't a reflection of the quality of your work many local businesses simply don't have a consistent process for collecting reviews after completing a job. Customers rarely leave one on their own, but they often will when it's made simple and convenient. Building a simple review collection process would help close that gap and make your existing work more visible.</p>
+      
+    </div>
+    <div class="opp-item">
+      <div class="opp-title"><span class="opp-num">03</span> Website / Landing Page</div>
+      <p>While a website is not the biggest immediate issue, it becomes an important piece once more people start finding your business online. When someone discovers you through Google, referrals, or other channels, they usually want somewhere to verify who they're contacting, see the full range of services you offer, and feel confident they're making the right choice.
+Right now, customers searching beyond Nextdoor have limited information available to evaluate the business. With the range of services you provide, mobile mechanic work, truck repair, undercoating, and fleet services.</p>
+<p>A simple website would give everything a central place and make it easier for potential customers to understand what you do and take the next step.</p>
+    </div>
+    <div class="opp-item">
+      <div class="opp-title"><span class="opp-num">04</span> Local Search Visibility</div>
+      <p>Local search visibility determines whether your business appears when nearby customers search for services like "mobile mechanic," "truck repair," or "undercoating." Google looks at several signals when deciding which businesses to show, including the strength and completeness of your Google Business Profile, review presence, website signals, and overall online activity.</p>
+<br>
+<p>This isn't really a separate fix on its own, it's the result of building the foundation that helps Google understand your business and gives customers confidence to contact you.
+
+Right now, because there is little online presence beyond Nextdoor, you're missing opportunities to appear in front of people actively searching for these services. Once the foundation is built, visibility grows gradually over time, which is why getting the basics in place early matters.</p>
+    </div>
+  </section>
+
+  <!-- PRIORITY ACTIONS -->
+  <section>
+    <div class="section-head">
+      <h2>Priority Actions</h2>
+    </div>
+
+    <div class="priority-card">
+      <span class="tag">Priority 1</span>
+      <h3>Create &amp; optimize a Google Business Profile.</h3>
+      <ul>
+        <li>Create and verify the profile </li>
+        
+        <li>Add all service categories (mobile mechanic, truck repair, undercoating, fleet services etc)</li>
+        <li>Add service area and hours </li>
+        <li>Add photos of vehicles, work, and equipment</li>
+        <li>Write a clear, keyword-relevant business description</li>
+
+      </ul>
+    </div>
+
+    <div class="priority-card">
+      <span class="tag">Priority 2</span>
+      <h3>Build a review collection process.</h3>
+      <ul>
+        <li>Set up a Google Business Profile review link (needed before anything else here works)</li>
+        <li>Create a simple process to ask every customer for a review right after the job is done </li>
+        <li>Send the request by text or email, whichever is easier to reach them by</li>
+        <li>Follow up once if there's no response after a few days</li>
+        <li>Optionally set up an automated version later so this happens without manual effort each time</li>
+      </ul>
+    </div>
+
+    <div class="priority-card">
+      <span class="tag">Priority 3</span>
+         <h3>Launch a simple website / landing page.</h3>
+      <ul>
+        <li>Build a simple one-page site covering: mobile mechanic, truck repair, undercoating, fleet services</li>
+        <li>Include service area, hours, and a clear way to contact you</li>
+        <li>Add a few photos of your work, vehicles, or equipment</li>
+        <li>Link the site from your Google Business Profile once both are live</li>
+      </ul>
+      <p style="font-size:13px; color:var(--text-faint); margin-top:12px; font-style:italic;">This can wait until the first two are showing results — a website mainly helps once people are already finding you and want to check you out.</p>
+    </div>
+
+    <div class="priority-card">
+      <span class="tag">Priority 4</span>
+       <h3>Improve local search visibility.</h3>
+      <p style="font-size:13px; color:var(--text-faint); margin-top:4px;">This naturally follows once the first three are in place — nothing separate to build here.</p>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="divider"></div>
+    <p>Thanks for taking the time to look through this.</p>
+    <p>I hope you found it useful and that it gives you a clearer picture of how your business currently appears online, along with a few practical ideas you can implement.</p>
+    <p>If you'd like to discuss any of the recommendations or have questions about them, feel free to reach out.</p>
+    <p class="signature">— Katelyn · kateylndoesyt@gmail.com</p>
+  </section>
+
+</div>
+
+<script>
+  // Click-to-upload: lets you pick real screenshots from your computer.
+  // Works entirely in-browser — no server, no upload. Preview is embedded
+  // directly into the page so it's baked in when you save the final file.
+  document.querySelectorAll('.upload-slot').forEach(function(slot){
+    var input = slot.querySelector('input[type=file]');
+    var placeholder = slot.querySelector('.placeholder-content');
+    var removeBtn = slot.querySelector('.remove-btn');
+
+    slot.addEventListener('click', function(e){
+      // once an image is in place, clicking should open the lightbox,
+      // not the file picker again — unless they clicked remove
+      if(slot.classList.contains('has-image') && e.target !== removeBtn){
+        e.preventDefault();
+        var img = slot.querySelector('img');
+        if(img) openLightbox(img.src);
+      }
+    });
+
+    input.addEventListener('change', function(e){
+      var file = e.target.files[0];
+      if(!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        var img = document.createElement('img');
+        img.src = ev.target.result;
+        placeholder.style.display = 'none';
+        var existing = slot.querySelector('img');
+        if(existing) existing.remove();
+        slot.insertBefore(img, removeBtn);
+        slot.classList.add('has-image');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    removeBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var img = slot.querySelector('img');
+      if(img) img.remove();
+      placeholder.style.display = 'block';
+      slot.classList.remove('has-image');
+      input.value = '';
+    });
+  });
+
+  // Lightbox — click any locked/finalized image to view it full screen
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src){
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  }
+  lightbox.addEventListener('click', closeLightbox);
+  document.getElementById('lightboxClose').addEventListener('click', function(e){
+    e.stopPropagation();
+    closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeLightbox();
+  });
+
+  
+</script>
+
+</body>
+</html>
